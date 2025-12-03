@@ -38,9 +38,9 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="h-[calc(75vh-10px)] flex items-center justify-center">
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-md w-96"
@@ -48,10 +48,10 @@ export default function LoginPage() {
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-2 mb-4 rounded">{error}</div>
+          <div>{error}</div>
         )}
-
-        <label className="block mb-2 font-semibold">Username</label>
+        
+        <label className="bg-black">Username</label>
         <input
           type="text"
           value={username}
