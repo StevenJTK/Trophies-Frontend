@@ -1,19 +1,57 @@
+"use client";
 import TrophyCard from './cards';
-import {Trophies} from './trophy';
+import {Trophies, getTrophy} from './trophy';
+import { useEffect, useState, useMemo } from 'react';
 
-const fakeTrophies: Trophies[] = [
-  { id: 1, trophyName: "First Win", trophyType: "Bronze", trophyDescription: "Unlocked your first achievement" },
-  { id: 2, trophyName: "Champion", trophyType: "Gold", trophyDescription: "Reached the top rank" },
-  { id: 3, trophyName: "Speedster", trophyType: "Silver", trophyDescription: "Completed the game under 2 hours" },
+type Props = {
+  gameName: string;
+  trophyNames: string[];
+};
+
+export default function TrophyGrid({ gameName, trophyNames }: Props) {
+  const [trophies, setTrophies] = useState<Trophies[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-];
+  const cleanTrophyNames = useMemo(
+    () => trophyNames.filter(name => name.trim() !== ""),
+    [trophyNames]
+  );
 
-export default function TrophyGrid() {
+  useEffect(() => {
+    async function fetchTrophies() {
+      try {
+        const fetched = await Promise.all(
+          cleanTrophyNames.map(name => getTrophy(gameName, name))
+        );
+        const valid = fetched.filter(Boolean) as Trophies[];
+        if (valid.length === 0) setError('No trophies found or invalid token');
+        setTrophies(valid);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to fetch trophies');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (cleanTrophyNames.length > 0) {
+      fetchTrophies();
+    } else {
+      setLoading(false);
+      setError('No trophy names provided');
+    }
+  }, [gameName, cleanTrophyNames]);
+  
+  if (loading) return <p>Loading trophies...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-      {fakeTrophies.map(trophy => (
-        <TrophyCard key={trophy.id} trophy={trophy} />
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+      {trophies.map(t => (
+        <TrophyCard key={t.id} trophy={t} />
       ))}
     </div>
   );
 }
+
