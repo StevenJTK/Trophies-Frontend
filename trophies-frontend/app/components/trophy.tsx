@@ -26,9 +26,9 @@ export async function getTrophy(gameName: string, trophyName: string): Promise<T
         'Content-Type': 'application/json',
       },
     });
-
+    
     if (!res.ok) return null;
-
+    
     const data: Trophies = await res.json();
     return data;
   } catch (err) {

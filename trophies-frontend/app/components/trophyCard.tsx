@@ -1,4 +1,18 @@
-import { Trophies } from './trophy';
+export type Trophies = {
+    id: number;
+    trophyName: string;
+    trophyType: string;
+    trophyDescription: string;
+}
+
+export type Game = {
+    id: number
+    gameName: string;
+    gameDescription: string;
+    genre: string;
+    releaseDate: string;
+    developer: string;
+}
 
 type Props = {
   trophy: Trophies;
@@ -13,5 +27,7 @@ export default function TrophyCard({ trophy }: Props) {
     </div>
   );
 }
+
+
 
 
