@@ -25,7 +25,7 @@ export default function LoginPage() {
         setLoading(false);
         return;
       }
-
+      
       const data = await res.json();
       localStorage.setItem("token", data.token);
       localStorage.setItem("username", data.username);
@@ -46,7 +46,7 @@ export default function LoginPage() {
         className="bg-white p-8 rounded-lg shadow-md w-96"
       >
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-
+        
         {error && (
           <div>{error}</div>
         )}
@@ -59,7 +59,7 @@ export default function LoginPage() {
           className="w-full p-2 border rounded mb-4"
           required
         />
-
+        
         <label className="block mb-2 font-semibold">Password</label>
         <input
           type="password"
@@ -68,7 +68,7 @@ export default function LoginPage() {
           className="w-full p-2 border rounded mb-6"
           required
         />
-
+        
         <button
           type="submit"
           disabled={loading}

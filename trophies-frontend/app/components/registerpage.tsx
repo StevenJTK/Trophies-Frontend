@@ -55,7 +55,7 @@ export default function RegisterPage() {
         
         {error && <p className="text-red-500 mb-2">{error}</p>}
         {success && <p className="text-green-600 mb-2">Registration successful!</p>}
-
+        
         <input
           type="text"
           placeholder="Username"
@@ -64,7 +64,7 @@ export default function RegisterPage() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-
+        
         <input
           type="email"
           placeholder="Email"
@@ -82,7 +82,7 @@ export default function RegisterPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-
+        
         <button
           type="submit"
           disabled={loading}
