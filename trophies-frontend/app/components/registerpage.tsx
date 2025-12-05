@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -10,6 +11,7 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const router = useRouter();
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -38,6 +40,7 @@ export default function RegisterPage() {
       localStorage.setItem("token", data.token);
 
       setSuccess(true);
+      router.push("/trophies")
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {

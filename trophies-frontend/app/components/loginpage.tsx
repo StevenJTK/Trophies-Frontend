@@ -1,11 +1,14 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +34,8 @@ export default function LoginPage() {
       localStorage.setItem("username", data.username);
 
       setLoading(false);
-      alert("Login successful!");
+      alert("Login successful!"),
+      router.push("/trophies")
     } catch (err) {
       console.error(err);
       setError("Network error");
