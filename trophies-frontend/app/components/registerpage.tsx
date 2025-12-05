@@ -7,40 +7,38 @@ export default function RegisterPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const router = useRouter();
 
-  async function handleRegister(e: React.FormEvent) {
+   async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8080/register", {
+      
+      const res = await fetch("http://localhost:8080/auth/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json" ,
+        },
+        
         body: JSON.stringify({
           username,
           email,
           password
         }),
       });
-
+      
       if (!res.ok) {
         const msg = await res.text();
         throw new Error(msg || "Registration failed");
       }
-
-      const data = await res.json();
-
-      
-      localStorage.setItem("token", data.token);
-
       setSuccess(true);
-      router.push("/trophies")
+      router.push("/")
     } catch (err: any) {
       setError(err.message || "Something went wrong");
     } finally {
@@ -76,7 +74,7 @@ export default function RegisterPage() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-
+        
         <input
           type="password"
           placeholder="Password"

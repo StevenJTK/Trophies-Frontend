@@ -7,11 +7,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const csrfToken = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))
-  ?.split("=")[1];
+  
   
   const router = useRouter();
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -22,7 +21,7 @@ export default function LoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
-        credentials: "include"
+
       });
 
       if (!res.ok) {
@@ -32,13 +31,9 @@ export default function LoginPage() {
         return;
       }
       
-      const data = await res.json();
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("username", data.username);
-
       setLoading(false);
       alert("Login successful!"),
-      router.push("/trophies")
+      router.push("/")
     } catch (err) {
       console.error(err);
       setError("Network error");

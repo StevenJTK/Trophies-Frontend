@@ -20,6 +20,12 @@ export default function Home() {
           Login
         </Link>
       </div>
+      <Link
+          href="/logout"
+          className="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition"
+        >
+          Logout
+        </Link>
     </div>
   );
 }
