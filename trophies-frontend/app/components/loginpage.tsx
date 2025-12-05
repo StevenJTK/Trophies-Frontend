@@ -7,6 +7,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const csrfToken = document.cookie.split("; ").find((row) => row.startsWith("XSRF-TOKEN="))
+  ?.split("=")[1];
   
   const router = useRouter();
 
@@ -20,6 +22,7 @@ export default function LoginPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
+        credentials: "include"
       });
 
       if (!res.ok) {
